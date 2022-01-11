@@ -17,7 +17,7 @@ class MyDocument extends Document {
             rel='stylesheet'
           />
         </Head>
-        <body>
+        <body className='h-screen bg-cover bg-[url("../public/background.png")] p-2'>
           <Main />
           <NextScript />
         </body>

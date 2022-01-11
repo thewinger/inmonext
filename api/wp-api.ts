@@ -55,7 +55,7 @@ export function getProperties() {
 export function getPropertyBySlug(slug: string) {
   return client.query({
     variables: {
-      id: slug,
+      slug: slug,
     },
     query: gql`
       query getPropertyBySlug($slug: ID!) {
