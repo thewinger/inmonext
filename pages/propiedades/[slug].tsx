@@ -8,6 +8,36 @@ import Layout from '../components/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
+export async function getStaticPaths() {
+  const { data } = await getProperties()
+
+  const properties = data.properties as RootQueryToPropertyConnection
+
+  const paths = properties?.nodes?.map((property) => ({
+    params: {
+      slug: property?.slug,
+    },
+  }))
+
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ slug: string }>
+) => {
+  const { data } = await getPropertyBySlug(context.params?.slug as string)
+
+  return {
+    props: {
+      property: data.property as Property,
+    },
+    revalidate: 60,
+  }
+}
+
 const Propiedad: NextPage<Props> = ({ property }) => {
   return (
     <Layout>
@@ -17,26 +47,3 @@ const Propiedad: NextPage<Props> = ({ property }) => {
 }
 
 export default Propiedad
-
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ slug: string }>
-) {
-  const { data } = await getPropertyBySlug(context.params?.slug as string)
-  return {
-    props: {
-      property: data.property as Property,
-    },
-  }
-}
-
-export async function getStaticPaths() {
-  const { data } = await getProperties()
-  const properties = data.properties as RootQueryToPropertyConnection
-  const paths = properties?.nodes?.map((property) => ({
-    params: {
-      slug: property?.slug,
-    },
-  }))
-
-  return { paths, fallback: false }
-}
