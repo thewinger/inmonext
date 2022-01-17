@@ -13,7 +13,7 @@ let headerNav = [
 ]
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const handleClick = () => {
     setMenuOpen(!menuOpen)
@@ -78,7 +78,7 @@ const Header = () => {
         <nav
           className={`${
             menuOpen ? '' : 'hidden'
-          } absolute left-0 top-[4.5rem] w-full rounded-lg bg-white/95 border-2 border-white shadow-xl`}
+          } absolute left-0 top-[4.5rem] w-full rounded-lg bg-white/90 border-2 border-white shadow-xl`}
         >
           <div className='w-full flex flex-col'>
             {headerNav.map((item, i) => (
