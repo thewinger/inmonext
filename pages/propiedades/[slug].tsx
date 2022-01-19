@@ -6,6 +6,8 @@ import {
   RootQueryToPropertyConnection,
 } from '../../generated/graphql'
 import Layout from '../components/Layout'
+import imgPlaceholder from '../../public/img-placeholder.svg'
+import ProductSlider from '../components/ProductSlider'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -45,27 +47,29 @@ const Propiedad: NextPage<Props> = ({ property }) => {
   return (
     <Layout>
       <div>
-        <div>
-          <div className='relative w-full max-w-3xl aspect-[3/2]'>
-            {mediaItems && (
+        <div className='relative w-full max-w-3xl aspect-[3/2]'>
+          <ProductSlider key={property.slug}>
+            {mediaItems?.map((image, i) => (
+              <div key={image?.sourceUrl!} className=''>
+                <Image
+                  src={image?.sourceUrl!}
+                  alt={image?.title || 'Property Image'}
+                  layout='fill'
+                  objectFit='cover'
+                  priority={i === 0}
+                  quality='85'
+                />
+              </div>
+            ))}
+          </ProductSlider>
+          {/* {mediaItems && (
               <Image
-                src={mediaItems[0]?.sourceUrl as string}
-                alt={mediaItems[0]?.title as string}
+                src={(mediaItems[0]?.sourceUrl as string) || imgPlaceholder}
+                alt={(mediaItems[0]?.title as string) || 'Image not loaded'}
                 layout='fill'
                 objectFit='cover'
               />
-            )}
-          </div>
-          {/* {mediaItems?.map((item, i) => ( */}
-          {/*   <div className='w-full aspect-[3/2] bg-red-500'> */}
-          {/*     <Image */}
-          {/*       key={i} */}
-          {/*       src={item?.sourceUrl as string} */}
-          {/*       alt={item?.title as string} */}
-          {/*       layout='fill' */}
-          {/*     /> */}
-          {/*   </div> */}
-          {/* ))} */}
+            )} */}
         </div>
         <div>
           <h1>{property.title}</h1>
