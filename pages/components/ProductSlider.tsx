@@ -1,3 +1,4 @@
+import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import React, {
   Children,
@@ -20,20 +21,11 @@ const ProductSlider = ({ children }: Props) => {
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
-    slides: { perView: 1 },
+    // slides: { perView: 1 },
     created: () => setIsMounted(true),
     slideChanged(s) {
       const slideNumber = s.track.details.rel
       setCurrentSlide(slideNumber)
-
-      if (thumbsContainerRef.current) {
-        const $el = document.getElementById(`thumb-$(slideNumber)`)
-        if (slideNumber >= 3) {
-          thumbsContainerRef.current.scrollLeft = $el!.offsetLeft
-        } else {
-          thumbsContainerRef.current.scrollLeft = 0
-        }
-      }
     },
   })
 
@@ -67,19 +59,21 @@ const ProductSlider = ({ children }: Props) => {
     }
   }, [])
 
-  const onPrev = React.useCallback(() => slider.current?.prev(), [slider])
-  const onNext = React.useCallback(() => slider.current?.next(), [slider])
+  // const onPrev = React.useCallback(() => slider.current?.prev(), [slider])
+  // const onNext = React.useCallback(() => slider.current?.next(), [slider])
 
   return (
     <div
       ref={sliderContainerRef}
-      className='relative w-full h-full select-none'
+      className='relative w-full h-full select-none overflow-hidden slider-root'
     >
       <div
         ref={ref}
-        className={`${isMounted ? 'opacity-100' : ''} keen-slider`}
+        className={`relative h-full transition-opacity duration-150  ${
+          isMounted ? 'opacity-100' : ''
+        } keen-slider`}
       >
-        {slider && <ProductSliderControl onPrev={onPrev} onNext={onNext} />}
+        {/* {slider && <ProductSliderControl onPrev={onPrev} onNext={onNext} />} */}
         {Children.map(children, (child) => {
           // Add the keen-slider__slide className to children
           if (isValidElement(child)) {
@@ -87,9 +81,9 @@ const ProductSlider = ({ children }: Props) => {
               ...child,
               props: {
                 ...child.props,
-                className: `${
+                className: `aspect-[3/2] ${
                   child.props.className ? `${child.props.className} ` : ''
-                } keen-slider__slide`,
+                }keen-slider__slide`,
               },
             }
           }
@@ -97,7 +91,10 @@ const ProductSlider = ({ children }: Props) => {
         })}
       </div>
 
-      <div className='' ref={thumbsContainerRef}>
+      <div
+        className='relative flex flex-wrap w-full h-full album bg-red-500/50'
+        ref={thumbsContainerRef}
+      >
         {slider &&
           Children.map(children, (child, idx) => {
             if (isValidElement(child)) {
@@ -105,9 +102,11 @@ const ProductSlider = ({ children }: Props) => {
                 ...child,
                 props: {
                   ...child.props,
-                  className: `${child.props.className} ${
-                    currentSlide === idx ? 'selected' : ''
-                  } thumbnail`,
+                  className: `${
+                    child.props.className
+                  } overflow-hidden inline-block basis-1/3 cursor-pointer w-full aspect-[3/2] ${
+                    currentSlide === idx ? 'border-2 border-red-500 ' : ''
+                  }thumbnailItem`,
                   id: `thumb-${idx}`,
                   onClick: () => {
                     slider.current?.moveToIdx(idx)
