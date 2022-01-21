@@ -46,8 +46,8 @@ const Propiedad: NextPage<Props> = ({ property }) => {
 
   return (
     <Layout>
-      <div>
-        <div className='flex items-center justify-center overflow-x-hidden bg-white rounded-md p-4 sliderContainer'>
+      <div className='bg-white rounded-md mt-6 p-4'>
+        <div className='flex items-center justify-center overflow-x-hidden sliderContainer'>
           <ProductSlider key={property.slug}>
             {mediaItems?.map((image, i) => (
               <div
@@ -61,7 +61,7 @@ const Propiedad: NextPage<Props> = ({ property }) => {
                   objectFit='cover'
                   priority={i === 0}
                   quality='85'
-                  // className='w-full h-full max-h-full object-cover'
+                  className=''
                 />
               </div>
             ))}

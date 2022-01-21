@@ -81,7 +81,7 @@ const ProductSlider = ({ children }: Props) => {
               ...child,
               props: {
                 ...child.props,
-                className: `aspect-[3/2] ${
+                className: `aspect-[3/2] rounded-sm ${
                   child.props.className ? `${child.props.className} ` : ''
                 }keen-slider__slide`,
               },
@@ -92,7 +92,7 @@ const ProductSlider = ({ children }: Props) => {
       </div>
 
       <div
-        className='relative flex flex-wrap w-full h-full album bg-red-500/50'
+        className='relative mt-4 grid grid-cols-3 h-full album '
         ref={thumbsContainerRef}
       >
         {slider &&
@@ -104,8 +104,10 @@ const ProductSlider = ({ children }: Props) => {
                   ...child.props,
                   className: `${
                     child.props.className
-                  } overflow-hidden inline-block basis-1/3 cursor-pointer w-full aspect-[3/2] ${
-                    currentSlide === idx ? 'border-2 border-red-500 ' : ''
+                  } overflow-hidden cursor-pointer aspect-[3/2] rounded border-4 ${
+                    currentSlide === idx
+                      ? 'border-emerald-600 '
+                      : 'border-white '
                   }thumbnailItem`,
                   id: `thumb-${idx}`,
                   onClick: () => {
