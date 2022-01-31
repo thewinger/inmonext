@@ -3,7 +3,10 @@ import Document, { Head, Html, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang='es'>
+      <Html
+        lang='es'
+        className='h-screen bg-fixed bg-right-bottom bg-cover bg-[url("../public/background.png")]'
+      >
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <link rel='preconnect' href='https://fonts.googleapis.com' />
@@ -17,7 +20,7 @@ class MyDocument extends Document {
             rel='stylesheet'
           />
         </Head>
-        <body className='h-screen bg-cover bg-[url("../public/background.png")] p-2'>
+        <body className=''>
           <Main />
           <NextScript />
         </body>

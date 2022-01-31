@@ -93,10 +93,16 @@ export function getPropertyBySlug(slug: string) {
               slug
             }
           }
-          locations {
+          locations(where: { childless: true }) {
             nodes {
               name
               slug
+              ancestors {
+                nodes {
+                  name
+                  slug
+                }
+              }
             }
           }
         }

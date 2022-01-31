@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <>
-      <header className='relative flex flex-wrap justify-between items-start py-2 px-4 pr-3 rounded-lg bg-white/75 border-2 border-white shadow-xl '>
+      <header className='sticky z-50 w-full top-0 flex flex-wrap justify-between items-start py-2 px-4 pr-3 bg-white/80 backdrop-blur-md border-b-2 border-gray-50 '>
         <Link href='/'>
           <a className='w-48 h-12 relative'>
             <span className='sr-only'>InmoGolf Bonalba home page</span>
@@ -40,8 +40,10 @@ const Header = () => {
         <button
           onClick={handleClick}
           className={`${
-            menuOpen ? 'bg-emerald-600 text-white' : 'text-emerald-600'
-          } inline-flex p-3 rounded ml-auto outline-none hover:bg-emerald-600 hover:text-white`}
+            menuOpen
+              ? 'bg-gradient-to-b from-green-600 to-green-700 text-white'
+              : 'text-green-600'
+          } inline-flex p-3 rounded ml-auto outline-none hover:bg-gradient-to-b from-green-600 to-green-700 hover:text-white`}
         >
           {menuOpen ? (
             <svg
@@ -78,15 +80,15 @@ const Header = () => {
         <nav
           className={`${
             menuOpen ? '' : 'hidden'
-          } absolute left-0 top-[4.5rem] w-full rounded-lg bg-white/90 border-2 border-white shadow-xl`}
+          } absolute left-0 top-[4.5rem] w-full rounded-lg bg-white/95 backdrop-blur-md border-2 border-white shadow-xl`}
         >
           <div className='w-full flex flex-col'>
             {headerNav.map((item, i) => (
               <Link key={i} href={item.href}>
                 <a
                   className={`${
-                    router.pathname == item.href ? 'bg-emerald-100' : ''
-                  } p-4 text-emerald-900 font-medium text-lg rounded-md hover:text-white hover:bg-emerald-600`}
+                    router.pathname == item.href ? 'bg-green-100' : ''
+                  } p-4 text-green-900 font-medium text-lg rounded-md hover:font-semibold hover:text-white from-green-600 to-green-700 hover:bg-gradient-to-b `}
                 >
                   {item.title}
                 </a>

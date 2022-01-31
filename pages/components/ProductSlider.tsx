@@ -69,7 +69,7 @@ const ProductSlider = ({ children }: Props) => {
     >
       <div
         ref={ref}
-        className={`relative h-full transition-opacity duration-150  ${
+        className={`relative h-full transition-opacity duration-150 rounded-md ${
           isMounted ? 'opacity-100' : ''
         } keen-slider`}
       >
@@ -81,7 +81,7 @@ const ProductSlider = ({ children }: Props) => {
               ...child,
               props: {
                 ...child.props,
-                className: `aspect-[3/2] rounded-sm ${
+                className: `aspect-[3/2] ${
                   child.props.className ? `${child.props.className} ` : ''
                 }keen-slider__slide`,
               },
@@ -104,10 +104,10 @@ const ProductSlider = ({ children }: Props) => {
                   ...child.props,
                   className: `${
                     child.props.className
-                  } overflow-hidden cursor-pointer aspect-[3/2] rounded border-4 ${
+                  } overflow-hidden cursor-pointer aspect-[3/2] w-28 rounded-md border-4 ${
                     currentSlide === idx
                       ? 'border-emerald-600 '
-                      : 'border-white '
+                      : 'border-transparent '
                   }thumbnailItem`,
                   id: `thumb-${idx}`,
                   onClick: () => {
