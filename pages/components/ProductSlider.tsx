@@ -1,125 +1,78 @@
-import 'keen-slider/keen-slider.min.css'
-import { useKeenSlider } from 'keen-slider/react'
 import React, {
-  Children,
-  isValidElement,
   useState,
-  useRef,
   useEffect,
+  useCallback,
 } from 'react'
-import ProductSliderControl from './ProductSliderControl'
+import { Thumb } from './ProductSliderThumb'
+import useEmblaCarousel from '.embla-carousel-react'
 
 type Props = {
   children?: React.ReactNode
 }
 
-const ProductSlider = ({ children }: Props) => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isMounted, setIsMounted] = useState(false)
-  const sliderContainerRef = useRef<HTMLDivElement>(null)
-  const thumbsContainerRef = useRef<HTMLDivElement>(null)
-
-  const [ref, slider] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    // slides: { perView: 1 },
-    created: () => setIsMounted(true),
-    slideChanged(s) {
-      const slideNumber = s.track.details.rel
-      setCurrentSlide(slideNumber)
-    },
+const ProductSlider = ({ slides }: Props) => {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false })
+  const [thumbViewportRef, emblaThumbs] useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    selectedClass: '',
+    dragFree: true
   })
 
-  // Stop the history navigation gesture on touch devices
+  const onThumbClick = useCallback(
+    (index) => {
+      if (!embla || !emblaThumbs) return
+      if (emblaThumbs.clickAllowed()) embla.scrollTo(index)
+    },
+    [embla, emblaThumbs]
+  )
+
+  const onSelect = useCallback(() => {
+    if (!embla || !emblaThumbs) return
+    setSelectedIndex(embla.selectedScrollSnap())
+    emblaThumbs.scrollTo(embla.selectedScrollSnap())
+  }, [embla, emblaThumbs, setSelectedIndex])
+
   useEffect(() => {
-    const preventNavigation = (event: TouchEvent) => {
-      // Center point of the touch area
-      const touchXPosition = event.touches[0].pageX
-      // Size of the touch area
-      const touchXRadius = event.touches[0].radiusX || 0
-
-      // We set a threshold ( 10px) on both sizes of the screen,
-      // if the touch area overlaps with the screen edges
-      // it's likely to trigger the naigation. We prevent the
-      // touchstart event in taht case.
-      if (
-        touchXPosition - touchXRadius < 10 ||
-        touchXPosition + touchXRadius > window.innerWidth - 10
-      )
-        event.preventDefault()
-    }
-
-    const slider = sliderContainerRef.current!
-
-    slider.addEventListener('touchstart', preventNavigation)
-
-    return () => {
-      if (slider) {
-        slider.removeEventListener('touchstart', preventNavigation)
-      }
-    }
-  }, [])
-
-  // const onPrev = React.useCallback(() => slider.current?.prev(), [slider])
-  // const onNext = React.useCallback(() => slider.current?.next(), [slider])
-
+    if (!embla) return
+    onSelect()
+    embla.on('select', onSelect)
+  }, [embla, onSelect])
   return (
-    <div
-      ref={sliderContainerRef}
-      className='relative w-full h-full select-none overflow-hidden slider-root'
-    >
-      <div
-        ref={ref}
-        className={`relative h-full transition-opacity duration-150 rounded-md ${
-          isMounted ? 'opacity-100' : ''
-        } keen-slider`}
-      >
-        {/* {slider && <ProductSliderControl onPrev={onPrev} onNext={onNext} />} */}
-        {Children.map(children, (child) => {
-          // Add the keen-slider__slide className to children
-          if (isValidElement(child)) {
-            return {
-              ...child,
-              props: {
-                ...child.props,
-                className: `aspect-[3/2] ${
-                  child.props.className ? `${child.props.className} ` : ''
-                }keen-slider__slide`,
-              },
-            }
-          }
-          return child
-        })}
+   <>
+      <div className="embla">
+        <div className="embla__viewport" ref={mainViewportRef}>
+          <div className="embla__container">
+            {slides.map((index) => (
+              <div className="embla__slide" key={index}>
+                <div className="embla__slide__inner">
+                  <img
+                    className="embla__slide__img"
+                    src={mediaByIndex(index)}
+                    alt="A cool cat."
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div
-        className='relative mt-4 grid grid-cols-3 h-full album '
-        ref={thumbsContainerRef}
-      >
-        {slider &&
-          Children.map(children, (child, idx) => {
-            if (isValidElement(child)) {
-              return {
-                ...child,
-                props: {
-                  ...child.props,
-                  className: `${
-                    child.props.className
-                  } overflow-hidden cursor-pointer aspect-[3/2] w-28 rounded-md border-4 ${
-                    currentSlide === idx
-                      ? 'border-emerald-600 '
-                      : 'border-transparent '
-                  }thumbnailItem`,
-                  id: `thumb-${idx}`,
-                  onClick: () => {
-                    slider.current?.moveToIdx(idx)
-                  },
-                },
-              }
-            }
-            return child
-          })}
+      <div className="embla embla--thumb">
+        <div className="embla__viewport" ref={thumbViewportRef}>
+          <div className="embla__container embla__container--thumb">
+            {slides.map((index) => (
+              <Thumb
+                onClick={() => onThumbClick(index)}
+                selected={index === selectedIndex}
+                imgSrc={mediaByIndex(index)}
+                key={index}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
