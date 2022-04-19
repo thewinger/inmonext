@@ -44,8 +44,8 @@ export const getStaticProps = async (
 }
 
 const Propiedad: NextPage<Props> = ({ property }) => {
-  const mediaItems = property.attachedMedia?.nodes || undefined
-  const propertyTypes = property.categories?.nodes || undefined
+  const mediaItems = property.attachedMedia?.nodes
+  const propertyTypes = property.categories?.nodes || null
   const propertyType = Object.values(propertyTypes!)[0]?.name
   const propertyInfo = property.property_features
   const locations = property.locations?.nodes || undefined
@@ -54,34 +54,18 @@ const Propiedad: NextPage<Props> = ({ property }) => {
   const [featuresOpen, setfeaturesOpen] = useState(false)
   // property.locations?.nodes?.map((location) => location) || undefined
 
-  console.table(locations)
+  // console.table(locations)
   return (
     <Layout>
-      {/* {console.table(locations)} */}
+      {console.table(locations)}
+      {console.table(mediaItems)}
 
       <div className='mb-24 mt-6 border-2 border-white bg-white/95 p-4 backdrop-blur-md'>
         <h1 className='font-sans text-2xl font-semibold tracking-tighter'>
           {property.title}
         </h1>
         <div className='sliderContainer mt-2 flex items-center justify-center overflow-x-hidden'>
-          <ProductSlider key={property.slug}>
-            {mediaItems?.map((image, i) => (
-              <div
-                key={image?.sourceUrl!}
-                className='relative h-full text-center'
-              >
-                <Image
-                  src={image?.sourceUrl || imgPlaceholder}
-                  alt={image?.title || 'Property Image'}
-                  layout='fill'
-                  objectFit='cover'
-                  priority={i === 0}
-                  quality='85'
-                  className='rounded-sm'
-                />
-              </div>
-            ))}
-          </ProductSlider>
+           {/* <ProductSlider key={property.slug} slides={mediaItems} /> */}
         </div>
 
         <div className='mt-4 text-gray-800'>
@@ -99,7 +83,7 @@ const Propiedad: NextPage<Props> = ({ property }) => {
                     {location?.parent?.node?.name && (
                       <span>{location.parent?.node?.name}</span>
                     )}
-                    <span>{location.name}</span>
+                    <span>{location?.name}</span>
                   </div>
                 ))}
               </div>

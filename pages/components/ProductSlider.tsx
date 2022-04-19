@@ -2,20 +2,22 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  ReactNode
 } from 'react'
 import { Thumb } from './ProductSliderThumb'
-import useEmblaCarousel from '.embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
+import Image from 'next/image'
 
-type Props = {
-  children?: React.ReactNode
+
+type PropType = {
+   slides: object
 }
 
-const ProductSlider = ({ slides }: Props) => {
+const ProductSlider = ({ slides }: PropType) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false })
-  const [thumbViewportRef, emblaThumbs] useEmblaCarousel({
-    containScroll: 'keepSnaps',
-    selectedClass: '',
+  const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
+    containScroll: "keepSnaps",
     dragFree: true
   })
 
@@ -38,18 +40,21 @@ const ProductSlider = ({ slides }: Props) => {
     onSelect()
     embla.on('select', onSelect)
   }, [embla, onSelect])
+
+
   return (
    <>
       <div className="embla">
         <div className="embla__viewport" ref={mainViewportRef}>
           <div className="embla__container">
-            {slides.map((index) => (
+            {slides &&
               <div className="embla__slide" key={index}>
                 <div className="embla__slide__inner">
-                  <img
+                  <Image
                     className="embla__slide__img"
-                    src={mediaByIndex(index)}
-                    alt="A cool cat."
+                    src={slide.sourceUrl}
+                    alt={slide.title}
+                    layout='fill'
                   />
                 </div>
               </div>
@@ -61,11 +66,11 @@ const ProductSlider = ({ slides }: Props) => {
       <div className="embla embla--thumb">
         <div className="embla__viewport" ref={thumbViewportRef}>
           <div className="embla__container embla__container--thumb">
-            {slides.map((index) => (
+            {slides && slides.map((slide, index) => (
               <Thumb
                 onClick={() => onThumbClick(index)}
                 selected={index === selectedIndex}
-                imgSrc={mediaByIndex(index)}
+                imgSrc={slide.sourceUrl}
                 key={index}
               />
             ))}

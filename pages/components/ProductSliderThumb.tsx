@@ -1,5 +1,7 @@
+import Image from "next/image";
 
-export const Thumb = ({ selected, onClick, imgSrc }) => (
+
+export const Thumb = ({ selected, onClick, imgSrc, imgTitle }) => (
   <div
     className={`embla__slide embla__slide--thumb ${
       selected ? "is-selected" : ""
@@ -10,7 +12,7 @@ export const Thumb = ({ selected, onClick, imgSrc }) => (
       className="embla__slide__inner embla__slide__inner--thumb"
       type="button"
     >
-      <img className="embla__slide__thumbnail" src={imgSrc} alt="A cool cat." />
+      <Image className="embla__slide__thumbnail" src={imgSrc} alt={imgTitle} layout="fill" />
     </button>
   </div>
 );
