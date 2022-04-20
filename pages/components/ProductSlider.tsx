@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  ReactNode
 } from 'react'
 import { Thumb } from './ProductSliderThumb'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -10,7 +9,7 @@ import Image from 'next/image'
 
 
 type PropType = {
-   slides: object
+   slides: []
 }
 
 const ProductSlider = ({ slides }: PropType) => {
@@ -47,18 +46,19 @@ const ProductSlider = ({ slides }: PropType) => {
       <div className="embla">
         <div className="embla__viewport" ref={mainViewportRef}>
           <div className="embla__container">
-            {slides &&
-              <div className="embla__slide" key={index}>
-                <div className="embla__slide__inner">
-                  <Image
-                    className="embla__slide__img"
-                    src={slide.sourceUrl}
-                    alt={slide.title}
-                    layout='fill'
-                  />
-                </div>
-              </div>
-            ))}
+            {slides && slides.map((slide, index) => {
+              console.log(slide)
+              // <div className="embla__slide" key={index}>
+              //   <div className="embla__slide__inner">
+              //     <Image
+              //       className="embla__slide__img"
+              //       src={slide.sourceUrl}
+              //       alt={slide.title}
+              //       layout='fill'
+              //     />
+              //   </div>
+              // </div>
+            })}
           </div>
         </div>
       </div>
