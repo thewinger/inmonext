@@ -64,7 +64,7 @@ const Propiedad: NextPage<Props> = ({ property }) => {
           {property.title}
         </h1>
         <div className='sliderContainer mt-2 flex items-center justify-center overflow-x-hidden'>
-          <ProductSlider key={property.slug} slides={mediaItems} />
+          <ProductSlider key={property.slug} slides={mediaItems as []} />
         </div>
 
         <div className='mt-4 text-gray-800'>

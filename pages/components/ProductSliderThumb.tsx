@@ -3,7 +3,7 @@ import { MouseEventHandler } from "react";
 
 
 type PropType = {
-  selected: number,
+  selected: boolean,
   onClick: MouseEventHandler<HTMLButtonElement>,
   imgSrc: string,
   imgTitle: string,
