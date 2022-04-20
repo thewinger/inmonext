@@ -43,22 +43,21 @@ const ProductSlider = ({ slides }: PropType) => {
 
   return (
    <>
-      <div className="embla">
-        <div className="embla__viewport" ref={mainViewportRef}>
-          <div className="embla__container">
-            {slides && slides.map((slide, index) => {
-              console.log(slide)
-              // <div className="embla__slide" key={index}>
-              //   <div className="embla__slide__inner">
-              //     <Image
-              //       className="embla__slide__img"
-              //       src={slide.sourceUrl}
-              //       alt={slide.title}
-              //       layout='fill'
-              //     />
-              //   </div>
-              // </div>
-            })}
+      <div className="embla relative overflow-hidden m-0 block w-full rounded p-0 mb-4">
+        <div className="embla__viewport aspect-w-3 aspect-h-2" ref={mainViewportRef}>
+          <div className="embla__container flex gap-2">
+            {slides.map((slide, index) => (
+              <div className="embla__slide" key={index}>
+                <div className="embla__slide__inner">
+                  <Image
+                    className="embla__slide__img"
+                    src={slide['sourceUrl']}
+                    alt={slide['title']}
+                    layout='fill'
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -66,14 +65,14 @@ const ProductSlider = ({ slides }: PropType) => {
       <div className="embla embla--thumb">
         <div className="embla__viewport" ref={thumbViewportRef}>
           <div className="embla__container embla__container--thumb">
-            {slides && slides.map((slide, index) => (
+           {slides && slides.map((slide, index) => (
               <Thumb
                 onClick={() => onThumbClick(index)}
                 selected={index === selectedIndex}
-                imgSrc={slide.sourceUrl}
+                imgSrc={slide['sourceUrl']}
                 key={index}
               />
-            ))}
+           ))}
           </div>
         </div>
       </div>

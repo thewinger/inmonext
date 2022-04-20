@@ -1,7 +1,15 @@
 import Image from "next/image";
+import { MouseEventHandler } from "react";
 
 
-export const Thumb = ({ selected, onClick, imgSrc, imgTitle }) => (
+type PropType = {
+  selected: number,
+  onClick: MouseEventHandler<HTMLButtonElement>,
+  imgSrc: string,
+  imgTitle: string,
+}
+
+export const Thumb = ({ selected, onClick, imgSrc, imgTitle }: PropType) => (
   <div
     className={`embla__slide embla__slide--thumb ${
       selected ? "is-selected" : ""

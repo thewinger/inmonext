@@ -7,7 +7,7 @@ import {
 } from '../../generated/graphql'
 import NumberFormat from 'react-number-format'
 import Layout from '../components/Layout'
-import imgPlaceholder from '../../public/img-placeholder.svg'
+// import imgPlaceholder from '../../public/img-placeholder.svg'
 import ProductSlider from '../components/ProductSlider'
 import { useState } from 'react'
 
