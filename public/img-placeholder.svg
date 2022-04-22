@@ -1,10 +1,25 @@
 <svg width="720" height="480" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_2)">
 <rect width="720" height="480" rx="8" fill="url(#paint0_radial_1_2)"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M319.2 192.4C315.593 192.4 312.134 193.833 309.583 196.383C307.033 198.934 305.6 202.393 305.6 206V274C305.6 277.607 307.033 281.066 309.583 283.617C312.134 286.167 315.593 287.6 319.2 287.6H400.8C404.407 287.6 407.866 286.167 410.417 283.617C412.967 281.066 414.4 277.607 414.4 274V206C414.4 202.393 412.967 198.934 410.417 196.383C407.866 193.833 404.407 192.4 400.8 192.4H319.2ZM400.8 274H319.2L346.4 219.6L366.8 260.4L380.4 233.2L400.8 274Z" fill="#94A3B8"/>
+<ellipse cx="888.5" cy="1345.5" rx="869.5" ry="893.5" fill="#059669"/>
+<g filter="url(#filter0_b_1_2)">
+<rect width="1920" height="1360" fill="white" fill-opacity="0.6"/>
+</g>
+</g>
 <defs>
+<filter id="filter0_b_1_2" x="-596" y="-596" width="3112" height="2552" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImage" stdDeviation="298"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_1_2"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_1_2" result="shape"/>
+</filter>
 <radialGradient id="paint0_radial_1_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(360 240) rotate(90) scale(452 678)">
 <stop stop-color="#E2E8F0"/>
 <stop offset="1" stop-color="#CBD5E1"/>
 </radialGradient>
+<clipPath id="clip0_1_2">
+<rect width="720" height="480" rx="8" fill="white"/>
+</clipPath>
 </defs>
 </svg>
