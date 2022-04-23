@@ -48,10 +48,11 @@ const ProductSlider = ({ slides }: PropType) => {
               <div className="embla__slide min-w-full" key={index}>
                 <div className="embla__slide__inner aspect-w-3 aspect-h-2 relative overflow-hidden rounded">
                   <Image
-                    className="embla__slide__img relative block flex-[0_0_100%]"
+                    className="embla__slide__img relative block rounded"
                     src={slide["sourceUrl"]}
                     alt={slide["title"]}
                     layout="fill"
+                    objectFit="scale-down"
                     placeholder="blur"
                     blurDataURL={Shimmer}
                     priority
