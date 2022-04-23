@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['inmogolfbonalba.local'],
+    domains: ['wp.winsrvr.com'],
   },
 }
