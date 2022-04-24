@@ -52,7 +52,7 @@ const ProductSlider = ({ slides }: PropType) => {
                     src={slide["sourceUrl"]}
                     alt={slide["title"]}
                     layout="fill"
-                    objectFit="scale-down"
+                    objectFit="contain"
                     placeholder="blur"
                     blurDataURL={Shimmer}
                     priority

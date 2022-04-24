@@ -18,6 +18,51 @@ export function getSiteMeta() {
   })
 }
 
+export function getPropertyByStatustag(statustag: string) {
+  return client.query({
+    variables: {
+      statustag: statustag,
+    },
+   query: gql`
+   query getPropertyByStatustag($statustag: String!) {
+     properties(where: {statustag: $statustag}) {
+       nodes {
+         title
+         slug
+         property_info {
+           statustag
+           price
+         }
+         property_features {
+           bedrooms
+           bathrooms
+           housesize
+         }
+         locations {
+           nodes {
+             name
+             slug
+             ancestors {
+               nodes {
+                 name
+                 slug
+               }
+             }
+           }
+         }
+         attachedMedia(first: 1) {
+           nodes {
+             sourceUrl
+             slug
+           }
+         }
+       }
+     }
+   }
+    `
+ })
+}
+
 export function getProperties() {
   return client.query({
     query: gql`
