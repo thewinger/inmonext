@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Layout from "./components/Layout";
 
-const Venta = () => {
+const TipoPage = (props) => {
   const router = useRouter();
   const query = router.query;
   let statustag = query.statustagUrl as string;
@@ -21,4 +21,18 @@ const Venta = () => {
   );
 };
 
-export default Venta;
+export default TipoPage;
+
+export async function getStaticPaths() {
+  const paths = ["en-venta", "en-alquiler", "obra-nueva"];
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
