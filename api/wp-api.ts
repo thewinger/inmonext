@@ -18,49 +18,88 @@ export function getSiteMeta() {
   })
 }
 
+export function getLocations() {
+  return client.query({
+    query: gql`
+      query getLocations {
+        locations(where: { parent: 0 }) {
+          edges {
+            node {
+              databaseId
+              name
+              children {
+                nodes {
+                  databaseId
+                  parentDatabaseId
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  })
+}
+
+export function getCategories() {
+  return client.query({
+    query: gql`
+      query getCategories {
+        categories {
+          nodes {
+            name
+            databaseId
+          }
+        }
+      }
+    `,
+  })
+}
+
 export function getPropertyByStatustag(statustag: string) {
   return client.query({
     variables: {
       statustag: statustag,
     },
-   query: gql`
-   query getPropertyByStatustag($statustag: String!) {
-     properties(where: {statustag: $statustag}) {
-       nodes {
-         title
-         slug
-         property_info {
-           statustag
-           price
-         }
-         property_features {
-           bedrooms
-           bathrooms
-           housesize
-         }
-         locations {
-           nodes {
-             name
-             slug
-             ancestors {
-               nodes {
-                 name
-                 slug
-               }
-             }
-           }
-         }
-         attachedMedia(first: 1) {
-           nodes {
-             sourceUrl
-             slug
-           }
-         }
-       }
-     }
-   }
-    `
- })
+    query: gql`
+      query getPropertyByStatustag($statustag: String!) {
+        properties(where: { statustag: $statustag }) {
+          nodes {
+            title
+            slug
+            property_info {
+              statustag
+              price
+            }
+            property_features {
+              bedrooms
+              bathrooms
+              housesize
+            }
+            locations {
+              nodes {
+                name
+                slug
+                ancestors {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+              }
+            }
+            attachedMedia(first: 1) {
+              nodes {
+                sourceUrl
+                slug
+              }
+            }
+          }
+        }
+      }
+    `,
+  })
 }
 
 export function getProperties() {

@@ -1,25 +1,25 @@
-import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
-import { getSiteMeta } from '../api/wp-api'
-import { GeneralSettings } from '../generated/graphql'
+import { InferGetStaticPropsType, NextPage } from 'next'
+import { getLocations } from '../api/wp-api'
+import { Location } from '../generated/graphql'
 import Layout from './components/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-const Home: NextPage<Props> = ({ siteMeta }) => {
+const Home: NextPage<Props> = ({ locations }) => {
   return (
     <Layout>
-      <h1>{siteMeta.title}</h1>
+      <h1>{JSON.stringify(locations, null, 4)}</h1>
     </Layout>
   )
 }
 
 export default Home
 export async function getStaticProps() {
-  const siteMeta = await getSiteMeta()
+  const locations = await getLocations()
 
   return {
     props: {
-      siteMeta: siteMeta.data.generalSettings as GeneralSettings,
+      locations: locations.data.locations as Location
     },
   }
 }
