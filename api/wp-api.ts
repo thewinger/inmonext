@@ -22,7 +22,7 @@ export function getLocations() {
   return client.query({
     query: gql`
       query getLocations {
-        locations(where: { parent: 0 }) {
+        locations(first: 100, where: { parent: 0 }) {
           edges {
             node {
               databaseId
@@ -46,7 +46,7 @@ export function getCategories() {
   return client.query({
     query: gql`
       query getCategories {
-        categories {
+        categories(first: 100) {
           nodes {
             name
             databaseId

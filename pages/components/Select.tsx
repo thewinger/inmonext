@@ -13,7 +13,7 @@ type SelectProps = {
   name: string,
   emptyFirst?: boolean,
   placeholder: string,
-  options: Option[],
+  options: string[],
   onChange?: (e: ChangeEvent) => void
 }
 
@@ -33,7 +33,7 @@ export const Select = ({name, label, emptyFirst, placeholder, options, onChange}
     <Listbox value={value} onChange={onValueChange}>
       <Listbox.Label>{label}</Listbox.Label>
         <Listbox.Button className="focus:outline-none relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-            <span className="block truncate">
+            <span className="capitalize block truncate">
               {emptyFirst ?
                 value ? value : "Todos"
                 : value
@@ -65,7 +65,7 @@ export const Select = ({name, label, emptyFirst, placeholder, options, onChange}
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
+                      className={`capitalize block truncate ${
                         selected ? 'font-medium' : 'font-normal'
                       }`}
                     >
@@ -93,7 +93,7 @@ export const Select = ({name, label, emptyFirst, placeholder, options, onChange}
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${
+                        className={`capitalize block truncate ${
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >

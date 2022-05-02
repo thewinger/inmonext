@@ -1,26 +1,39 @@
-import { Form, Formik, FormikHelpers, useFormikContext } from "formik"
+import { Form, Formik, FormikHelpers } from "formik"
+import { RootQueryToCategoryConnection } from "../../generated/graphql"
 import Select from "./Select"
 
 interface Values {
   tipoOperacion: string
 }
 
-const SearchCard = () => {
+type SearchCardProps = {
+  categoriesData?: RootQueryToCategoryConnection
+}
 
-  const tipoOperacion = [
-    {
-      item: "En Venta",
-      value: "En Venta",
-    },
-    {
-      item: "En Alquiler",
-      value: "En Alquiler",
-    },
-    {
-      item: "Obra Nueva",
-      value: "Obra Nueva",
-    },
-  ]
+const SearchCard = ({categoriesData}: SearchCardProps) => {
+
+  const tipoOperacion = ["En Venta", "En Alquiler", "Obra Nueva"]
+
+  function extractValue(arr: [], prop: string) {
+    // extract value from property
+    let extractedValue = arr.map(item => item[prop])
+
+    return extractedValue
+  }
+
+  var tipoVivienda: string[] = []
+
+  if (categoriesData && categoriesData.nodes) {
+    tipoVivienda = extractValue(categoriesData?.nodes as [], 'name')
+    console.log(tipoVivienda)
+  }
+
+
+
+
+  var estancias = ["1", "2", "3", "4", "5+"];
+  var precio = [];
+
   const initialValues = {
     tipoOperacion: tipoOperacion[0].value
   }
@@ -45,6 +58,9 @@ const SearchCard = () => {
       >
         <Form>
           <Select label="Tipo de Operacion" name="tipoOperacion" placeholder="Seleccione una operacion…" options={tipoOperacion} emptyFirst/>
+          if (tipoVivienda) {
+            <Select label="Tipo de Vivienda" name="tipoVivienda" placeholder="Seleccione tipo de vivienda…" options={tipoVivienda} emptyFirst/>
+        }
           <button type="submit">Submit</button>
         </Form>
       </Formik>
