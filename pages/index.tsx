@@ -1,11 +1,15 @@
 import { getCategories, getLocations } from '../api/wp-api'
-import { Location, RootQueryToCategoryConnection } from '../generated/graphql'
+import {
+  RootQueryToCategoryConnection,
+  RootQueryToLocationConnection,
+} from '../generated/graphql'
 import Layout from './components/Layout'
 import { useRouter } from 'next/router'
 import SearchCard from './components/SearchCard'
 
 type HomeProps = {
   categoriesData: RootQueryToCategoryConnection
+  locationData: RootQueryToLocationConnection
 }
 // var statustag = {
 //   "en-venta": "En Venta",
@@ -13,33 +17,13 @@ type HomeProps = {
 //   "obra-nueva": "Obra Nueva",
 // }
 
-const Home = ({ categoriesData }: HomeProps) => {
+const Home = ({ categoriesData, locationData }: HomeProps) => {
   const { query } = useRouter()
-
-  const initialValues = {
-    optionsOperacion: [
-      {
-        item: 'Todos',
-        value: '',
-      },
-      {
-        item: 'En Venta',
-        value: 'En Venta',
-      },
-      {
-        item: 'En Alquiler',
-        value: 'En Alquiler',
-      },
-      {
-        item: 'Obra Nueva',
-        value: 'Obra Nueva',
-      },
-    ],
-  }
+  console.log(`query: ${query}`)
 
   return (
     <Layout>
-      <SearchCard categoriesData={categoriesData} />
+      <SearchCard categoriesData={categoriesData} locationData={locationData} />
     </Layout>
   )
 }
@@ -47,13 +31,13 @@ const Home = ({ categoriesData }: HomeProps) => {
 export default Home
 
 export async function getStaticProps() {
-  // const { data: locationsData } = await getLocations();
-  const { data } = await getCategories()
+  const { data: locationData } = await getLocations()
+  const { data: categoryData } = await getCategories()
 
   return {
     props: {
-      // locationsQl: locationsData,
-      categoriesData: data.categories,
+      locationData: locationData.locations,
+      categoriesData: categoryData.categories,
     },
     revalidate: 60,
   }

@@ -26,12 +26,12 @@ const SearchCard = ({ categoriesData, locationData }: SearchCardProps) => {
     tipoVivienda = plainObjectToArray(categoriesData?.nodes as [], 'name')
   }
 
-  // var location: string[] = []
-  // if (locationData && locationData.nodes) {
-  //   location = plainObjectToArray(locationData.nodes as [], 'name')
-  //   console.log(`location: ${locationData}`)
-  //   console.log(typeof locationData)
-  // }
+  var location: string[] = []
+  if (locationData && locationData.nodes) {
+    location = plainObjectToArray(locationData.nodes as [], 'name')
+    console.log(`location: ${location}`)
+    console.log(typeof location)
+  }
 
   var estancias = ['1', '2', '3', '4', '5+']
   var precio = []
@@ -61,7 +61,7 @@ const SearchCard = ({ categoriesData, locationData }: SearchCardProps) => {
           <Select
             label='Localización'
             name='location'
-            options={locationData!}
+            options={location}
             emptyFirst
           />
           <Select

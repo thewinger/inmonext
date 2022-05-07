@@ -22,17 +22,12 @@ export function getLocations() {
   return client.query({
     query: gql`
       query getLocations {
-        locations(first: 100, where: { parent: 0 }) {
-          edges {
-            node {
-              databaseId
-              name
-              children {
-                nodes {
-                  databaseId
-                  parentDatabaseId
-                  name
-                }
+        locations(where: { parent: 0 }, first: 100) {
+          nodes {
+            name
+            children {
+              nodes {
+                name
               }
             }
           }
