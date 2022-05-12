@@ -24,10 +24,12 @@ export function getLocations() {
       query getLocations {
         locations(where: { parent: 0 }, first: 100) {
           nodes {
+            databaseId
             name
             count
             children {
               nodes {
+                databaseId
                 name
                 count
               }

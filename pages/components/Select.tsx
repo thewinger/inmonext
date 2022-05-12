@@ -19,7 +19,7 @@ type SelectProps = {
 
 type ListOptionProps = {
   idx?: number,
-  value?: string,
+  value?: any,
   label: string
 }
 
@@ -87,29 +87,29 @@ selected ? 'font-medium' : 'font-normal'
     } else if (isObject(options)) {
       // console.log('is object')
 
-      options!.nodes!.map((option, idx) => {
+      options!.nodes!.map((option) => {
 
         if (option?.children!.nodes!.length === 0) {
           // console.log('sin hijos')
 
-          listOfOptions.push(<ListOption key={idx} value={option.name as string} label={option.name as string} />)
+          listOfOptions.push(<ListOption key={option.databaseId} value={option} label={`${option.name}`} />)
 
         } else {
           // console.log('con hijos')
           option &&
-          listOfOptions.push(<ListOption key={idx} value={option.name as string} label={option.name as string} />)
+          listOfOptions.push(<ListOption key={option.databaseId} value={option} label={`${option.name}`} />)
           // console.log(listOfOptions)
-          option!.children!.nodes!.map((option, idx) => {
+          option!.children!.nodes!.map((option) => {
 
-          option &&
-            listOfOptions.push(<ListOption key={idx} value={option.name as string} label={`-- ${option.name}`} />)
+            option &&
+            listOfOptions.push(<ListOption key={option.databaseId} value={option} label={`–– ${option.name}`} />)
 
           })
         }
+      })
       console.log('objects:')
       console.log(listOfOptions)
-        return listOfOptions
-      })
+      return listOfOptions
 
     }
     return null
@@ -122,10 +122,12 @@ selected ? 'font-medium' : 'font-normal'
     <Listbox as='div' name={name} value={value} onChange={onValueChange}>
       <Listbox.Label>{label}</Listbox.Label>
       <Listbox.Button className='relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-green-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-green-300 sm:text-sm'>
-        {value ? (
-          <span className='block truncate capitalize'>{value}</span>
-        ) : (
-          <span className='block truncate'>Todos</span>
+        {!value ? (
+            <span className='block truncate'>Todos</span>
+          ) : isObject(value) ? (
+            <span className='block truncate capitalize'>{value.name}</span>
+          ) : (
+            <span className='block truncate capitalize'>{value}</span>
         )}
         <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
           <SelectorIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
