@@ -25,9 +25,11 @@ export function getLocations() {
         locations(where: { parent: 0 }, first: 100) {
           nodes {
             name
+            count
             children {
               nodes {
                 name
+                count
               }
             }
           }

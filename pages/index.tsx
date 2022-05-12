@@ -19,7 +19,7 @@ type HomeProps = {
 
 const Home = ({ categoriesData, locationData }: HomeProps) => {
   const { query } = useRouter()
-  console.log(`query: ${query}`)
+  // console.log(`query: ${query}`)
 
   return (
     <Layout>

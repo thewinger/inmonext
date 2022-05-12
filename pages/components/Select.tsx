@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment } from 'react'
+import { ChangeEvent, Fragment, React } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useField } from 'formik'
@@ -20,7 +20,7 @@ type SelectProps = {
 type ListOptionProps = {
   idx?: number,
   value?: string,
-  option: string
+  label: string
 }
 
 export const Select = ({
@@ -40,8 +40,8 @@ export const Select = ({
     }
     setValue(e)
   }
-// TODO why active/select not working
-  function ListOption({idx, option}: ListOptionProps) {
+
+  const ListOption = ({idx, value, label}: ListOptionProps) => {
     return (
       <Listbox.Option
         key={idx ? idx : ''}
@@ -52,10 +52,10 @@ export const Select = ({
           <>
             <span
               className={`block truncate capitalize ${
-                selected ? 'font-medium' : 'font-normal'
-              }`}
+selected ? 'font-medium' : 'font-normal'
+}`}
             >
-              {option}
+              {label ? label : ''}
             </span>
             {selected ? (
               <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-green-600'>
@@ -67,6 +67,54 @@ export const Select = ({
       </Listbox.Option>
     )
   }
+
+  const isObject = (value: object) => {
+    return !!(value && typeof value === 'object' && !Array.isArray(value))
+  }
+
+  function CheckValues() {
+    let listOfOptions: JSX.Element[] = []
+
+    if (Array.isArray(options)) {
+
+      options.map((option, idx) => {
+        listOfOptions.push(<ListOption key={idx} value={option} label={option} />)
+      })
+      console.log('string:')
+      console.log(listOfOptions)
+      return listOfOptions
+
+    } else if (isObject(options)) {
+      // console.log('is object')
+
+      options!.nodes!.map((option, idx) => {
+
+        if (option?.children!.nodes!.length === 0) {
+          // console.log('sin hijos')
+
+          listOfOptions.push(<ListOption key={idx} value={option.name as string} label={option.name as string} />)
+
+        } else {
+          // console.log('con hijos')
+          option &&
+          listOfOptions.push(<ListOption key={idx} value={option.name as string} label={option.name as string} />)
+          // console.log(listOfOptions)
+          option!.children!.nodes!.map((option, idx) => {
+
+          option &&
+            listOfOptions.push(<ListOption key={idx} value={option.name as string} label={`-- ${option.name}`} />)
+
+          })
+        }
+      console.log('objects:')
+      console.log(listOfOptions)
+        return listOfOptions
+      })
+
+    }
+    return null
+  }
+
 
 
 
@@ -91,17 +139,12 @@ export const Select = ({
       >
         <Listbox.Options className='absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
           {emptyFirst ? (
-            <ListOption option='Todos' />
+            <ListOption label='Todos' />
           ) : (
             ''
           )}
-          {console.log(`inside: ${Array.isArray(options)}`)}
-          {Array.isArray(options)
-            ? options.map((option, idx) => <ListOption key={idx} value={option} option={option} /> )
-            : (options.nodes?.map((option) => {
-               option?.children ? "hola":"adios"
-            })
-          )}
+          {console.log(`inside: ${typeof options}`)}
+          {CheckValues()}
         </Listbox.Options>
       </Transition>
     </Listbox>

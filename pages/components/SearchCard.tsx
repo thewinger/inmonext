@@ -58,19 +58,23 @@ const SearchCard = ({ categoriesData, locationData }: SearchCardProps) => {
         }}
       >
         <Form className='relative flex flex-col gap-4'>
-          <Select
-            label='Localización'
-            name='location'
-            options={locationData!}
-            emptyFirst
-          />
-          <Select
-            label='Tipo de Operacion'
-            name='tipoOperacion'
-            options={tipoOperacion}
-            emptyFirst
-          />
-          {tipoVivienda && (
+          {locationData &&
+            <Select
+              label='Localización'
+              name='location'
+              options={locationData!}
+              emptyFirst
+            />
+          }
+          {tipoOperacion &&
+            <Select
+              label='Tipo de Operacion'
+              name='tipoOperacion'
+              options={tipoOperacion}
+              emptyFirst
+            />
+          }
+          {!tipoVivienda && (
             <Select
               label='Tipo de Vivienda'
               name='tipoVivienda'
