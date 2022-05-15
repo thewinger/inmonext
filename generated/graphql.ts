@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
+export type Maybe<T> = T;
+export type InputMaybe<T> = T;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -815,6 +815,8 @@ export type CommentRepliesArgs = {
 /** A Comment Author object */
 export type CommentAuthor = Commenter & Node & {
   __typename?: 'CommentAuthor';
+  /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
+  avatar?: Maybe<Avatar>;
   /** Identifies the primary key from the database. */
   databaseId: Scalars['Int'];
   /** The email for the comment author */
@@ -827,6 +829,14 @@ export type CommentAuthor = Commenter & Node & {
   name?: Maybe<Scalars['String']>;
   /** The url the comment author. */
   url?: Maybe<Scalars['String']>;
+};
+
+
+/** A Comment Author object */
+export type CommentAuthorAvatarArgs = {
+  forceDefault?: InputMaybe<Scalars['Boolean']>;
+  rating?: InputMaybe<AvatarRatingEnum>;
+  size?: InputMaybe<Scalars['Int']>;
 };
 
 /** Connection between the Comment type and the Comment type */
@@ -996,6 +1006,8 @@ export type CommentToParentCommentConnectionWhereArgs = {
 
 /** The author of a comment */
 export type Commenter = {
+  /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
+  avatar?: Maybe<Avatar>;
   /** Identifies the primary key from the database. */
   databaseId: Scalars['Int'];
   /** The email address of the author of a comment. */
@@ -3801,8 +3813,6 @@ export enum MediaItemSizeEnum {
   Medium = 'MEDIUM',
   /** MediaItem with the medium_large size */
   MediumLarge = 'MEDIUM_LARGE',
-  /** MediaItem with the post-thumbnail size */
-  PostThumbnail = 'POST_THUMBNAIL',
   /** MediaItem with the thumbnail size */
   Thumbnail = 'THUMBNAIL',
   /** MediaItem with the 1536x1536 size */
@@ -4040,7 +4050,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | Feature | Location | Page | Post | PostFormat | Property | Tag;
+export type MenuItemObjectUnion = Category | Feature | Location | Page | Post | Property | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -4090,10 +4100,8 @@ export type MenuItemToMenuItemLinkableConnectionEdge = {
 
 /** Registered menu locations */
 export enum MenuLocationEnum {
-  /** Put the menu in the primary location */
-  Primary = 'PRIMARY',
-  /** Put the menu in the social location */
-  Social = 'SOCIAL'
+  /** Empty menu location */
+  Empty = 'EMPTY'
 }
 
 /** The Type of Identifier used to fetch a single node. Default is "ID". To be used along with the "id" field. */
@@ -4990,6 +4998,24 @@ export type Plugin = Node & {
   version?: Maybe<Scalars['String']>;
 };
 
+/** The status of the WordPress plugin. */
+export enum PluginStatusEnum {
+  /** The plugin is currently active. */
+  Active = 'ACTIVE',
+  /** The plugin is a drop-in plugin. */
+  DropIn = 'DROP_IN',
+  /** The plugin is currently inactive. */
+  Inactive = 'INACTIVE',
+  /** The plugin is a must-use plugin. */
+  MustUse = 'MUST_USE',
+  /** The plugin is technically active but was paused while loading. */
+  Paused = 'PAUSED',
+  /** The plugin was active recently. */
+  RecentlyActive = 'RECENTLY_ACTIVE',
+  /** The plugin has an upgrade available. */
+  Upgrade = 'UPGRADE'
+}
+
 /** The post type */
 export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & UniformResourceIdentifiable & {
   __typename?: 'Post';
@@ -5229,13 +5255,13 @@ export type PostCategoriesNodeInput = {
 };
 
 /** The postFormat type */
-export type PostFormat = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
+export type PostFormat = DatabaseIdentifier & Node & TermNode & UniformResourceIdentifiable & {
   __typename?: 'PostFormat';
   /** Connection between the postFormat type and the ContentNode type */
   contentNodes?: Maybe<PostFormatToContentNodeConnection>;
   /** The number of objects connected to the object */
   count?: Maybe<Scalars['Int']>;
-  /** The unique resource identifier path */
+  /** The unique identifier stored in the database */
   databaseId: Scalars['Int'];
   /** The description of the object */
   description?: Maybe<Scalars['String']>;
@@ -7610,6 +7636,7 @@ export type RootQueryPluginsArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToPluginConnectionWhereArgs>;
 };
 
 
@@ -8793,6 +8820,16 @@ export type RootQueryToPluginConnectionEdge = {
   node?: Maybe<Plugin>;
 };
 
+/** Arguments for filtering the RootQueryToPluginConnection connection */
+export type RootQueryToPluginConnectionWhereArgs = {
+  /** Show plugin based on a keyword search. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve plugins where plugin status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PluginStatusEnum>>>;
+  /** Show plugins with a specific status. */
+  status?: InputMaybe<PluginStatusEnum>;
+};
+
 /** Connection between the RootQuery type and the post type */
 export type RootQueryToPostConnection = {
   __typename?: 'RootQueryToPostConnection';
@@ -9085,6 +9122,8 @@ export type RootQueryToPropertyConnectionWhereArgs = {
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
+  /** The String of the statustag to filter by */
+  statustag?: InputMaybe<Scalars['String']>;
   taxQuery?: InputMaybe<RootQueryToPropertyConnectionWhereArgsTaxQuery>;
   /** Title of the object */
   title?: InputMaybe<Scalars['String']>;
@@ -9970,6 +10009,34 @@ export type TaxonomyToContentTypeConnectionEdge = {
   node?: Maybe<ContentType>;
 };
 
+/** The template assigned to the node */
+export type Template_Blank = ContentTemplate & {
+  __typename?: 'Template_Blank';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']>;
+};
+
+/** The template assigned to the node */
+export type Template_PageLargeHeader = ContentTemplate & {
+  __typename?: 'Template_PageLargeHeader';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']>;
+};
+
+/** The template assigned to the node */
+export type Template_PageNoSeparators = ContentTemplate & {
+  __typename?: 'Template_PageNoSeparators';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']>;
+};
+
+/** The template assigned to the node */
+export type Template_SinglePostNoSeparators = ContentTemplate & {
+  __typename?: 'Template_SinglePostNoSeparators';
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']>;
+};
+
 /** Terms are nodes within a Taxonomy, used to group and relate other nodes. */
 export type TermNode = {
   /** The number of objects connected to the object */
@@ -10485,13 +10552,13 @@ export type UpdateSettingsPayload = {
   allSettings?: Maybe<Settings>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<Scalars['String']>;
-  /** Update the discussion setting. */
+  /** Update the DiscussionSettings setting. */
   discussionSettings?: Maybe<DiscussionSettings>;
-  /** Update the general setting. */
+  /** Update the GeneralSettings setting. */
   generalSettings?: Maybe<GeneralSettings>;
-  /** Update the reading setting. */
+  /** Update the ReadingSettings setting. */
   readingSettings?: Maybe<ReadingSettings>;
-  /** Update the writing setting. */
+  /** Update the WritingSettings setting. */
   writingSettings?: Maybe<WritingSettings>;
 };
 

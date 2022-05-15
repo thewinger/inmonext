@@ -1,5 +1,7 @@
 import { getCategories, getLocations } from '../api/wp-api'
 import {
+    Category,
+    Location,
   RootQueryToCategoryConnection,
   RootQueryToLocationConnection,
 } from '../generated/graphql'
@@ -19,11 +21,13 @@ type HomeProps = {
 
 const Home = ({ categoriesData, locationData }: HomeProps) => {
   const { query } = useRouter()
-  // console.log(`query: ${query}`)
+
+  const locations: Location[] = locationData.nodes!
+  const categories: Category[] = categoriesData.nodes!
 
   return (
     <Layout>
-      <SearchCard categoriesData={categoriesData} locationData={locationData} />
+      <SearchCard tipoViviendas={categories} locations={locations} />
     </Layout>
   )
 }

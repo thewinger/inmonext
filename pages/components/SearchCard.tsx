@@ -1,46 +1,48 @@
 import { Form, Formik, FormikHelpers } from 'formik'
 import {
-  RootQueryToCategoryConnection,
-  RootQueryToLocationConnection,
+  Location,
+  Category,
 } from '../../generated/graphql'
 import Select from './Select'
-import { plainObjectToArray } from '../../utils/index'
+import { toFormattedArray } from '../../api/utils'
 
+interface ValueObject {
+  name: string,
+  value: string | number
+}
 interface Values {
-  tipoOperacion: string
-  tipoVivienda: string
-  location: string
+  tipoOperaciones: ValueObject
+  tipoViviendas: ValueObject
+  locations: ValueObject
 }
 
 type SearchCardProps = {
-  categoriesData?: RootQueryToCategoryConnection
-  locationData?: RootQueryToLocationConnection
+  tipoViviendas?: Category[]
+  locations: Location[]
 }
 
-const SearchCard = ({ categoriesData, locationData }: SearchCardProps) => {
-  const tipoOperacion = ['En Venta', 'En Alquiler', 'Obra Nueva']
+const SearchCard = ({ tipoViviendas, locations }: SearchCardProps) => {
+  const tipoOperaciones = ['En Venta', 'En Alquiler', 'Obra Nueva']
 
-  var tipoVivienda: string[] = []
+  // var estancias = ['1', '2', '3', '4', '5+']
+  // var precio = []
 
-  if (categoriesData && categoriesData.nodes) {
-    tipoVivienda = plainObjectToArray(categoriesData?.nodes as [], 'name')
-  }
 
-  // var location: string[] = []
-  // if (locationData && locationData.nodes) {
-  //   location = plainObjectToArray(locationData.nodes as [], 'name')
-  //   console.log(`location: ${locationData}`)
-  //   console.log(typeof locationData)
-  // }
+  const emptyOption = { name: 'Todos', value: '' }
 
-  var estancias = ['1', '2', '3', '4', '5+']
-  var precio = []
-  // var location = ['Bonalba', '-- Bahia Golf', 'Campello']
+  var formattedOperaciones = toFormattedArray(tipoOperaciones)
+  formattedOperaciones = [emptyOption, ...formattedOperaciones!]
+
+    var formattedLocations = toFormattedArray(locations!)
+    formattedLocations = [emptyOption, ...formattedLocations!]
+
+    var formattedCategories = toFormattedArray(tipoViviendas!)
+    formattedCategories = [emptyOption, ...formattedCategories!]
 
   const initialValues = {
-    tipoOperacion: '',
-    tipoVivienda: '',
-    location: '',
+    tipoOperaciones: formattedOperaciones[0],
+    tipoViviendas: formattedCategories[0],
+    locations: formattedLocations[0]
   }
 
   return (
@@ -58,27 +60,27 @@ const SearchCard = ({ categoriesData, locationData }: SearchCardProps) => {
         }}
       >
         <Form className='relative flex flex-col gap-4'>
-          {locationData &&
+          {locations &&
             <Select
               label='Localización'
-              name='location'
-              options={locationData!}
+              name='locations'
+              options={formattedLocations}
               emptyFirst
             />
           }
-          {tipoOperacion &&
+          {formattedOperaciones &&
             <Select
               label='Tipo de Operacion'
-              name='tipoOperacion'
-              options={tipoOperacion}
+              name='tipoOperaciones'
+              options={formattedOperaciones}
               emptyFirst
             />
           }
-          {!tipoVivienda && (
+          {formattedCategories && (
             <Select
               label='Tipo de Vivienda'
-              name='tipoVivienda'
-              options={tipoVivienda}
+              name='tipoViviendas'
+              options={formattedCategories}
               emptyFirst
             />
           )}

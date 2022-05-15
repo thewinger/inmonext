@@ -1,8 +1,11 @@
 overwrite: true
-schema: 'http://inmogolfbonalba.local/graphql'
+schema: 'https://wp.winsrvr.com/graphql'
 generates:
   generated/graphql.ts:
     plugins:
       - 'typescript'
       - 'typescript-operations'
       - 'typescript-react-apollo'
+    config:
+      maybeValue: T
+      preResolveTypes: true
