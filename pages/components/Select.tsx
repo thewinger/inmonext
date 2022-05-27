@@ -2,12 +2,11 @@ import { ChangeEvent, Fragment, } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useField } from 'formik'
-import { Options } from '../../api/utils'
+import { Options } from '../../utils'
 
 type SelectProps = {
   label: string
   name: string
-  emptyFirst?: boolean
   options: Options[]
   onChange?: (e: ChangeEvent) => void
 }
@@ -28,8 +27,6 @@ export const Select = ({
     }
     setValue(e)
   }
-
-  console.log(value)
 
   return (
     <Listbox as='div' name={name} value={value} onChange={onValueChange}>
@@ -68,7 +65,7 @@ export const Select = ({
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
-                        {option.name}
+                        {option.name} ({option.count})
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">

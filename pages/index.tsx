@@ -8,6 +8,7 @@ import {
 import Layout from './components/Layout'
 import { useRouter } from 'next/router'
 import SearchCard from './components/SearchCard'
+import { useEffect } from 'react'
 
 type HomeProps = {
   categoriesData: RootQueryToCategoryConnection
@@ -23,11 +24,15 @@ const Home = ({ categoriesData, locationData }: HomeProps) => {
   const { query } = useRouter()
 
   const locations: Location[] = locationData.nodes!
-  const categories: Category[] = categoriesData.nodes!
+  const tipoViviendas: Category[] = categoriesData.nodes!
+
+  useEffect(() => {
+
+  })
 
   return (
     <Layout>
-      <SearchCard tipoViviendas={categories} locations={locations} />
+      <SearchCard query={query} tipoViviendas={tipoViviendas} locations={locations} />
     </Layout>
   )
 }
