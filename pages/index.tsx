@@ -1,4 +1,4 @@
-import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
+import { InferGetStaticPropsType, NextPage } from 'next'
 import { getSiteMeta } from '../api/wp-api'
 import { GeneralSettings } from '../generated/graphql'
 import Layout from './components/Layout'
