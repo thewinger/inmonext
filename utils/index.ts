@@ -8,7 +8,7 @@ export interface Options {
   count?: number
 }
 
-export const getAsString = (value: string | string[] ): string => {
+export const getAsString = (value: string | string[]): string => {
   if (Array.isArray(value)) {
     return value[0]
   }
@@ -23,7 +23,6 @@ export const initQueries = (query: ParsedUrlQuery, check: string, options: Optio
     const queryIndex = options.findIndex(x => x.name === getAsString(query[check]!))
     return queryIndex > -1 ? options[queryIndex] : options[0]
   } else {
-    console.log(`no check`)
     return options[0]
   }
 }
@@ -31,7 +30,7 @@ export const initQueries = (query: ParsedUrlQuery, check: string, options: Optio
 
 
 export const isObject = (value: object) => {
-    return !!(value && typeof value === 'object' && !Array.isArray(value))
+  return !!(value && typeof value === 'object' && !Array.isArray(value))
 }
 
 
@@ -41,7 +40,7 @@ export const toFormattedArray = (unformattedArray: string | string[] | Location[
   let newObj = {} as Options
 
   const newObjFunction = (name: string, value: string | number) => {
-    newObj = {name: name, value: value}
+    newObj = { name: name, value: value }
     return (listOfObjs.push(newObj))
   }
 
@@ -49,16 +48,13 @@ export const toFormattedArray = (unformattedArray: string | string[] | Location[
 
     unformattedArray.map((val) => {
       if (typeof val === 'string') {
-        newObj = {name: val, value: val}
+        newObj = { name: val, value: val }
         listOfObjs.push(newObj)
-      } else if (typeof val === 'object' && (val.__typename === 'Location' || val.__typename ===  'Category')) {
-        newObjFunction(val.name!, val.databaseId! )
-        newObj = {name: val.name!, value: val.databaseId!}
-        listOfObjs.push(newObj)
+      } else if (typeof val === 'object' && (val.__typename === 'Location' || val.__typename === 'Category')) {
+        newObjFunction(val.name!, val.databaseId!)
         if ('children' in val) {
           val.children?.nodes?.map((child) => {
-            newObj = {name: `-- ${child.name!}`, value: child.databaseId!}
-            listOfObjs.push(newObj)
+            newObjFunction(`-- ${child.name!}`, child.databaseId!)
           })
         }
       }

@@ -24,7 +24,6 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
 
 
   const emptyOption = { name: 'Todos', value: '' }
-
   var formattedOperaciones = toFormattedArray(tipoOperaciones)
   formattedOperaciones = [emptyOption, ...formattedOperaciones!]
 
@@ -65,7 +64,7 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
         }}
       >
         <Form className='relative flex flex-col gap-4'>
-          {!locations &&
+          {locations &&
             <Select
               label='Localización'
               name='localizacion'
@@ -79,7 +78,7 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
               options={formattedOperaciones}
             />
           }
-          {!formattedViviendas && (
+          {formattedViviendas && (
             <Select
               label='Tipo de Vivienda'
               name='tipoVivienda'
