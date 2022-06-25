@@ -16,6 +16,17 @@ export const getAsString = (value: string | string[]): string => {
   return value
 }
 
+export const postQueries = (values) => {
+  let queryObject: Options[]
+
+  queryObject = Object.entries(values)
+
+
+
+
+  return queryObject
+}
+
 
 export const initQueries = (query: ParsedUrlQuery, check: string, options: Options[]) => {
   // If query item exists but the value is not in the possible options, send the first item in options

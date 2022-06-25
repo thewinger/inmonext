@@ -7,7 +7,7 @@ import Select from './Select'
 // import { Options, toFormattedArray } from '../../api/utils'
 import { ParsedUrlQuery } from 'querystring'
 import router from 'next/router'
-import { initQueries, toFormattedArray } from '../../utils'
+import { initQueries, toFormattedArray, postQueries } from '../../utils'
 
 type SearchCardProps = {
   tipoViviendas: Category[]
@@ -50,17 +50,19 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
-        onSubmit={(
-          values,
-          // { setSubmitting }: FormikHelpers<Values>
-        ) => {
+        onSubmit={( values ) => {
+          // let valuesNames = Object.entries(values).map((val) => { val[1].name })
+          //  values needs to be { input = value, input = value, input = value }
           router.push({
-            pathname: '/',
-            // query: {...values, page: 1}
+            query: {...values, page: 1
           })
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-          }, 500)
+          // setTimeout(() => {
+          //
+          //   Object.entries(values).map((val) => {
+          //     console.log(val[1].name)
+          //   })
+          //   alert(JSON.stringify(values.name, null, 2))
+          // }, 500)
         }}
       >
         <Form className='relative flex flex-col gap-4'>
