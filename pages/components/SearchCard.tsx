@@ -22,7 +22,7 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
   // var estancias = ['1', '2', '3', '4', '5+']
   // var precio = []
 
-
+  // TODO - Let's try to simplify this so we don't have to do all this refactoring of objects
   const emptyOption = { name: 'Todos', value: '' }
   var formattedOperaciones = toFormattedArray(tipoOperaciones)
   formattedOperaciones = [emptyOption, ...formattedOperaciones!]
@@ -51,18 +51,15 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
         initialValues={initialValues}
         enableReinitialize={true}
         onSubmit={( values ) => {
-          // let valuesNames = Object.entries(values).map((val) => { val[1].name })
-          //  values needs to be { input = value, input = value, input = value }
-          router.push({
-            query: {...values, page: 1
-          })
-          // setTimeout(() => {
-          //
-          //   Object.entries(values).map((val) => {
-          //     console.log(val[1].name)
-          //   })
-          //   alert(JSON.stringify(values.name, null, 2))
-          // }, 500)
+          let queryValues = postQueries(values)
+        router.push(
+          {
+            pathname: '/cars',
+            query: { ...queryValues, page: 1 },
+          },
+          undefined,
+          { shallow: true }
+          )
         }}
       >
         <Form className='relative flex flex-col gap-4'>

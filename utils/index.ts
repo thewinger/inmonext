@@ -7,7 +7,6 @@ export interface Options {
   value: string | number,
   count?: number
 }
-
 export const getAsString = (value: string | string[]): string => {
   if (Array.isArray(value)) {
     return value[0]
@@ -17,14 +16,12 @@ export const getAsString = (value: string | string[]): string => {
 }
 
 export const postQueries = (values) => {
-  let queryObject: Options[]
-
-  queryObject = Object.entries(values)
-
-
-
-
+  let queryObject = {}
+  Object.entries(values).map((value) => {
+    queryObject[value[0]] = value[1].name
+  })
   return queryObject
+
 }
 
 
