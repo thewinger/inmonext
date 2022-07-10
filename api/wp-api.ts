@@ -18,50 +18,33 @@ export function getSiteMeta() {
   })
 }
 
-export function getPropertyByStatustag(statustag: string) {
+
+export function getFrontPageItems(featured: string) {
   return client.query({
     variables: {
-      statustag: statustag,
+      featured: featured,
     },
-   query: gql`
-   query getPropertyByStatustag($statustag: String!) {
-     properties(where: {statustag: $statustag}) {
-       nodes {
-         title
-         slug
-         property_info {
-           statustag
-           price
-         }
-         property_features {
-           bedrooms
-           bathrooms
-           housesize
-         }
-         locations {
-           nodes {
-             name
-             slug
-             ancestors {
-               nodes {
-                 name
-                 slug
-               }
-             }
-           }
-         }
-         attachedMedia(first: 1) {
-           nodes {
-             sourceUrl
-             slug
-           }
-         }
-       }
-     }
-   }
+    query: gql`
+    query getFeatured($featured: String) {
+      properties(
+        where: {metaQuery: {metaArray: {key: "_featured", value: $featured, compare: EQUAL_TO}}}
+      ) {
+        nodes {
+          databaseId
+          title
+          attachedMedia(first: 1) {
+            nodes {
+              sourceUrl
+              slug
+            }
+          }
+        }
+      }
+    }
     `
- })
+  })
 }
+
 
 export function getProperties() {
   return client.query({
@@ -154,4 +137,49 @@ export function getPropertyBySlug(slug: string) {
       }
     `,
   })
+}
+
+export function getPropertyByStatustag(statustag: string) {
+  return client.query({
+    variables: {
+      statustag: statustag,
+    },
+   query: gql`
+   query getPropertyByStatustag($statustag: String!) {
+     properties(where: {statustag: $statustag}) {
+       nodes {
+         title
+         slug
+         property_info {
+           statustag
+           price
+         }
+         property_features {
+           bedrooms
+           bathrooms
+           housesize
+         }
+         locations {
+           nodes {
+             name
+             slug
+             ancestors {
+               nodes {
+                 name
+                 slug
+               }
+             }
+           }
+         }
+         attachedMedia(first: 1) {
+           nodes {
+             sourceUrl
+             slug
+           }
+         }
+       }
+     }
+   }
+    `
+ })
 }
