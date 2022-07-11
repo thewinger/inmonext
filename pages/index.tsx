@@ -8,7 +8,14 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 const Home: NextPage<Props> = ({ siteMeta }) => {
   return (
     <Layout>
-      <h1>{siteMeta.title}</h1>
+      <div className='flex'>
+        <div className='main-content'>
+
+        </div>
+        <div>
+          <SearchCard />
+        </div>
+      </div>
     </Layout>
   )
 }
