@@ -19,28 +19,70 @@ export function getSiteMeta() {
 }
 
 
-export function getFrontPageItems(featured: string) {
+export function getFrontPageItems() {
   return client.query({
-    variables: {
-      featured: featured,
-    },
     query: gql`
-    query getFeatured($featured: String) {
-      properties(
-        where: {metaQuery: {metaArray: {key: "_featured", value: $featured, compare: EQUAL_TO}}}
-      ) {
+    query getFeatured() {
+    properties(
+      where: {metaQuery: {metaArray: {key: "_featured", value: "yes", compare: EQUAL_TO}}}
+      first: 5
+    ) {
+    nodes {
+      databaseId
+      title
+      property_info {
+        statustag
+      }
+      attachedMedia(first: 1) {
         nodes {
-          databaseId
-          title
-          attachedMedia(first: 1) {
-            nodes {
-              sourceUrl
-              slug
-            }
-          }
+          sourceUrl
+          slug
         }
       }
     }
+  }
+  alquiler: properties(
+    where: {metaQuery: {metaArray: {key: "_statustag", value: "En Alquiler", compare: EQUAL_TO}}}
+    first: 5
+  ) {
+    nodes {
+      databaseId
+      title
+      property_info {
+        statustag
+      }
+      attachedMedia(first: 1) {
+        nodes {
+          sourceUrl
+          slug
+        }
+      }
+      property_info {
+        statustag
+      }
+    }
+  }
+  venta: properties(
+    where: {metaQuery: {metaArray: {key: "_statustag", value: "En Venta", compare: EQUAL_TO}}}
+    first: 5
+  ) {
+    nodes {
+      databaseId
+      title
+      property_info {
+        statustag
+      }
+      attachedMedia(first: 1) {
+        nodes {
+          sourceUrl
+          slug
+        }
+      }
+      property_info {
+        statustag
+      }
+    }
+  }}
     `
   })
 }
