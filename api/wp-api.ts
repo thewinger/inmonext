@@ -63,6 +63,7 @@ export function getProperties() {
       query getAllPropiedades {
         properties(first: 100) {
           nodes {
+            __typename
             title
             slug
             property_features {

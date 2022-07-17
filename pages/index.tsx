@@ -7,8 +7,11 @@ import {
   RootQueryToLocationConnection,
   RootQueryToPropertyConnection,
 } from '../generated/graphql'
-import Layout from './components/Layout'
 import SearchCard from './components/SearchCard'
+import PropertyCard from './components/Card'
+import Layout from './components/Layout'
+// import { GeneralSettings, RootQueryToPropertyConnection } from '../generated/graphql'
+// import ProductSlider from './components/ProductSlider'
 
 type HomeProps = {
   categoriesData: RootQueryToCategoryConnection
@@ -24,14 +27,14 @@ const Home = ({ categoriesData, locationData, propertiesData }: HomeProps) => {
 
   return (
     <Layout>
-      <div className='flex'>
-        <div className='main-content'>
-
+      <div className='flex flex-row'>
+        <div className='main-content w-full mb-'>
         </div>
-        <div>
-          <SearchCard query={query} tipoViviendas={tipoViviendas} locations={locations} />
+        <div className='sidebar'>
+          <div className='searchCard' />
+            <SearchCard query={query} tipoViviendas={tipoViviendas} locations={locations} />
+          </div>
         </div>
-      </div>
     </Layout>
   )
 }
@@ -53,3 +56,4 @@ export async function getStaticProps() {
     revalidate: 60,
   }
 }
+

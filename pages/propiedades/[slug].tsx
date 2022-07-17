@@ -1,5 +1,4 @@
-import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
-import { getProperties, getPropertyBySlug } from '../../api/wp-api'
+import { getProperties, getPropertyBySlug } from "../../api/wp-api";
 import {
   Property,
   RootQueryToPropertyConnection,
@@ -29,8 +28,8 @@ const Propiedad = ({ property }: Props) => {
     <Layout>
       {/* {console.table(locations)} */}
 
-      <div className='mb-24 border-2 border-white bg-white/95 p-4 backdrop-blur-md'>
-        <h1 className='font-sans text-2xl font-semibold tracking-tighter'>
+      <div className="mb-24 mt-6 border-2 border-white/90 bg-white/90 p-4 backdrop-blur-md">
+        <h1 className="font-sans text-2xl font-semibold tracking-tighter">
           {property.title}
         </h1>
         <div className='sliderContainer mt-2 flex items-center justify-center overflow-x-hidden'>
@@ -87,7 +86,7 @@ const Propiedad = ({ property }: Props) => {
                 )}
               </div>
 
-              <div className='mt-4 grid grid-flow-col place-items-center justify-between gap-4 '>
+              <div className="mt-4 grid grid-flow-col place-items-center justify-around gap-4">
                 {propertyInfo?.bedrooms && (
                   <div className='flex items-center gap-2 text-lg text-gray-500'>
                     <svg
@@ -185,7 +184,7 @@ const Propiedad = ({ property }: Props) => {
           </div>
         </div>
       </div>
-      <div className='fixed bottom-0 left-0 right-0 m-2 flex items-center justify-between rounded-lg border-2 border-white/90 bg-white/80 p-4 shadow-xl backdrop-blur md:hidden'>
+      <div className="fixed bottom-0 left-0 right-0 m-2 flex items-center justify-between rounded-lg border-2 border-white/90 bg-white/90 p-4 shadow-xl backdrop-blur md:hidden">
         {property.property_info && (
           <div className='flex grow items-baseline'>
             <span className='text-4xl font-bold text-gray-900 '>
