@@ -3,6 +3,7 @@ import { getCategories, getLocations, getProperties } from '../api/wp-api'
 import {
   Category,
   Location,
+  Property,
   RootQueryToCategoryConnection,
   RootQueryToLocationConnection,
   RootQueryToPropertyConnection,
@@ -24,10 +25,18 @@ const Home = ({ categoriesData, locationData, propertiesData }: HomeProps) => {
 
   const locations: Location[] = locationData.nodes!
   const tipoViviendas: Category[] = categoriesData.nodes!
+  const properties: Property[] = propertiesData.nodes!
+  console.log(`properties`, properties)
+  const featured = properties.filter(property => property.property_info?.featured === 'Yes').slice(0,5)
+  const alquiler = properties.filter(property => property.property_info?.statustag === 'En Alquiler').slice(0,5)
+  const venta = properties.filter(property => property.property_info?.statustag === 'En Venta').slice(0,5)
+  console.log(`featured`, featured)
+  console.log(`alquiler`, alquiler)
+  console.log(`venta`, venta)
 
   return (
     <Layout>
-      <div className='flex flex-row'>
+      <div className='flex flex-col'>
         <div className='main-content w-full mb-'>
         </div>
         <div className='sidebar'>
