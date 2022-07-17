@@ -1,11 +1,25 @@
-import { InferGetStaticPropsType, NextPage } from 'next'
-import { getSiteMeta } from '../api/wp-api'
-import { GeneralSettings } from '../generated/graphql'
+import { useRouter } from 'next/router'
+import { getCategories, getLocations } from '../api/wp-api'
+import {
+  Category,
+  Location,
+  RootQueryToCategoryConnection,
+  RootQueryToLocationConnection,
+} from '../generated/graphql'
 import Layout from './components/Layout'
+import SearchCard from './components/SearchCard'
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>
+type HomeProps = {
+  categoriesData: RootQueryToCategoryConnection
+  locationData: RootQueryToLocationConnection
+}
 
-const Home: NextPage<Props> = ({ siteMeta }) => {
+const Home = ({ categoriesData, locationData }: HomeProps) => {
+  const { query } = useRouter()
+
+  const locations: Location[] = locationData.nodes!
+  const tipoViviendas: Category[] = categoriesData.nodes!
+
   return (
     <Layout>
       <div className='flex'>
@@ -13,7 +27,7 @@ const Home: NextPage<Props> = ({ siteMeta }) => {
 
         </div>
         <div>
-          <SearchCard />
+          <SearchCard query={query} tipoViviendas={tipoViviendas} locations={locations} />
         </div>
       </div>
     </Layout>
@@ -21,12 +35,16 @@ const Home: NextPage<Props> = ({ siteMeta }) => {
 }
 
 export default Home
+
 export async function getStaticProps() {
-  const siteMeta = await getSiteMeta()
+  const { data: locationData } = await getLocations()
+  const { data: categoryData } = await getCategories()
 
   return {
     props: {
-      siteMeta: siteMeta.data.generalSettings as GeneralSettings,
+      locationData: locationData.locations,
+      categoriesData: categoryData.categories,
     },
+    revalidate: 60,
   }
 }

@@ -18,72 +18,41 @@ export function getSiteMeta() {
   })
 }
 
-
-export function getFrontPageItems() {
+export function getLocations() {
   return client.query({
     query: gql`
-    query getFeatured() {
-    properties(
-      where: {metaQuery: {metaArray: {key: "_featured", value: "yes", compare: EQUAL_TO}}}
-      first: 5
-    ) {
-    nodes {
-      databaseId
-      title
-      property_info {
-        statustag
-      }
-      attachedMedia(first: 1) {
-        nodes {
-          sourceUrl
-          slug
+      query getLocations {
+        locations(where: { parent: 0 }, first: 100) {
+          nodes {
+            databaseId
+            name
+            count
+            children {
+              nodes {
+                databaseId
+                name
+                count
+              }
+            }
+          }
         }
       }
-    }
-  }
-  alquiler: properties(
-    where: {metaQuery: {metaArray: {key: "_statustag", value: "En Alquiler", compare: EQUAL_TO}}}
-    first: 5
-  ) {
-    nodes {
-      databaseId
-      title
-      property_info {
-        statustag
-      }
-      attachedMedia(first: 1) {
-        nodes {
-          sourceUrl
-          slug
+    `,
+  })
+}
+
+export function getCategories() {
+  return client.query({
+    query: gql`
+      query getCategories {
+        categories(first: 100) {
+          nodes {
+            name
+            databaseId
+          }
         }
       }
-      property_info {
-        statustag
-      }
-    }
-  }
-  venta: properties(
-    where: {metaQuery: {metaArray: {key: "_statustag", value: "En Venta", compare: EQUAL_TO}}}
-    first: 5
-  ) {
-    nodes {
-      databaseId
-      title
-      property_info {
-        statustag
-      }
-      attachedMedia(first: 1) {
-        nodes {
-          sourceUrl
-          slug
-        }
-      }
-      property_info {
-        statustag
-      }
-    }
-  }}
-    `
+    `,
   })
 }
 
@@ -92,15 +61,17 @@ export function getProperties() {
   return client.query({
     query: gql`
       query getAllPropiedades {
-        properties {
+        properties(first: 100) {
           nodes {
             title
             slug
             property_features {
               bathrooms
               bedrooms
+              housesize
             }
             property_info {
+              featured
               price
               statustag
             }
@@ -179,49 +150,4 @@ export function getPropertyBySlug(slug: string) {
       }
     `,
   })
-}
-
-export function getPropertyByStatustag(statustag: string) {
-  return client.query({
-    variables: {
-      statustag: statustag,
-    },
-   query: gql`
-   query getPropertyByStatustag($statustag: String!) {
-     properties(where: {statustag: $statustag}) {
-       nodes {
-         title
-         slug
-         property_info {
-           statustag
-           price
-         }
-         property_features {
-           bedrooms
-           bathrooms
-           housesize
-         }
-         locations {
-           nodes {
-             name
-             slug
-             ancestors {
-               nodes {
-                 name
-                 slug
-               }
-             }
-           }
-         }
-         attachedMedia(first: 1) {
-           nodes {
-             sourceUrl
-             slug
-           }
-         }
-       }
-     }
-   }
-    `
- })
 }
