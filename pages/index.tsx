@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import { getCategories, getLocations } from '../api/wp-api'
+import { getCategories, getLocations, getProperties } from '../api/wp-api'
 import {
   Category,
   Location,
   RootQueryToCategoryConnection,
   RootQueryToLocationConnection,
+  RootQueryToPropertyConnection,
 } from '../generated/graphql'
 import Layout from './components/Layout'
 import SearchCard from './components/SearchCard'
@@ -12,9 +13,10 @@ import SearchCard from './components/SearchCard'
 type HomeProps = {
   categoriesData: RootQueryToCategoryConnection
   locationData: RootQueryToLocationConnection
+  propertiesData: RootQueryToPropertyConnection
 }
 
-const Home = ({ categoriesData, locationData }: HomeProps) => {
+const Home = ({ categoriesData, locationData, propertiesData }: HomeProps) => {
   const { query } = useRouter()
 
   const locations: Location[] = locationData.nodes!
@@ -39,11 +41,14 @@ export default Home
 export async function getStaticProps() {
   const { data: locationData } = await getLocations()
   const { data: categoryData } = await getCategories()
+  const { data: propertiesData } = await getProperties()
+
 
   return {
     props: {
       locationData: locationData.locations,
       categoriesData: categoryData.categories,
+      propertiesData: propertiesData.properties,
     },
     revalidate: 60,
   }
