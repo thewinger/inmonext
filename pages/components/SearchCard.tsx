@@ -46,7 +46,7 @@ const SearchCard = ({ tipoViviendas, locations, query }: SearchCardProps) => {
 
 
   return (
-    <div className='rounded-md bg-white/75 p-4 shadow-md'>
+    <div className='md:rounded-md bg-white/75 p-4 shadow-md'>
       <Formik
         initialValues={initialValues}
         enableReinitialize={true}
