@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import logo from '../../public/Logo_Inmogolf.png'
+import logo from '/public/Logo_Inmogolf.png'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 

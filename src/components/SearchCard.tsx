@@ -2,12 +2,12 @@ import { Form, Formik } from 'formik'
 import {
   Location,
   Category,
-} from '../../generated/graphql'
+} from '../generated/graphql'
 import Select from './Select'
 // import { Options, toFormattedArray } from '../../api/utils'
 import { ParsedUrlQuery } from 'querystring'
 import router from 'next/router'
-import { initQueries, toFormattedArray, postQueries } from '../../utils'
+import { initQueries, toFormattedArray, postQueries } from '../utils'
 
 type SearchCardProps = {
   tipoViviendas: Category[]

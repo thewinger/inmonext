@@ -8,9 +8,9 @@ import {
   RootQueryToLocationConnection,
   RootQueryToPropertyConnection,
 } from '../generated/graphql'
-import SearchCard from './components/SearchCard'
-import PropertyCard from './components/Card'
-import Layout from './components/Layout'
+import SearchCard from '../components/SearchCard'
+import PropertyCard from '../components/Card'
+import Layout from '../components/Layout'
 // import { GeneralSettings, RootQueryToPropertyConnection } from '../generated/graphql'
 // import ProductSlider from './components/ProductSlider'
 

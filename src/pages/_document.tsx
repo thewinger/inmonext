@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html
         lang='es'
-        className='h-screen bg-fixed bg-right-bottom bg-cover bg-[url("../public/background.png")]'
+        className='h-screen bg-fixed bg-right-bottom bg-cover bg-bgImg'
       >
         <Head>
           <link rel='icon' href='/favicon.ico' />

@@ -2,7 +2,7 @@ import { ChangeEvent, Fragment, } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useField } from 'formik'
-import { Options } from '../../utils'
+import { Options } from '../utils'
 
 type SelectProps = {
   label: string
