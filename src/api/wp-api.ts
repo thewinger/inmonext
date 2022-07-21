@@ -56,7 +56,6 @@ export function getCategories() {
   })
 }
 
-
 export function getProperties() {
   return client.query({
     query: gql`
@@ -70,11 +69,17 @@ export function getProperties() {
               bathrooms
               bedrooms
               housesize
+              yearbuilt
             }
             property_info {
               featured
               price
               statustag
+            }
+            categories {
+              nodes {
+                name
+              }
             }
             attachedMedia(first: 1) {
               nodes {
@@ -82,9 +87,14 @@ export function getProperties() {
                 title
               }
             }
-            locations {
+            locations(where: { childless: true }) {
               nodes {
                 name
+                ancestors {
+                  nodes {
+                    name
+                  }
+                }
               }
             }
           }
