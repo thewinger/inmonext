@@ -23,11 +23,16 @@ const PropertyCard = ({ property }: Props) => {
               />
             </div>
           )}
+          {property.property_info && (
+            <div className='absolute top-6 left-6 backdrop-blur-md shrink-0 rounded-md border bg-white/60 text-green-900 py-1 px-2 text-xs font-semibold uppercase shadow-sm  '>
+              {property.property_info.statustag}
+            </div>
+          )}
           {property.property_info &&
             property.locations &&
             property.property_features && (
               <div className='flex flex-col gap-4'>
-                <div className='flex items-center justify-between'>
+                <div className='flex items-center justify-between gap-4 sm:justify-start'>
                   {property.property_info && property.property_info.price && (
                     <h3 className='font-sans text-xl font-semibold tracking-wide text-green-700 '>
                       <div className='flex items-baseline'>
@@ -45,11 +50,6 @@ const PropertyCard = ({ property }: Props) => {
                         )}
                       </div>
                     </h3>
-                  )}
-                  {property.property_info && (
-                    <div className='relative shrink-0 rounded-md border bg-white py-2 px-2 text-sm font-medium uppercase shadow-sm  '>
-                      {property.property_info.statustag}
-                    </div>
                   )}
                 </div>
                 <div className='xsgap-2  flex flex-col'>
@@ -111,10 +111,10 @@ const PropertyCard = ({ property }: Props) => {
                   )}
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex justify-around'>
                   {property.property_features &&
                     property.property_features.bedrooms && (
-                      <div className='flex  gap-2 text-lg text-slate-500'>
+                      <div className='flex gap-1 text-lg text-slate-500 only:grow only:self-start'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           className='h-6 w-6'
@@ -137,7 +137,7 @@ const PropertyCard = ({ property }: Props) => {
 
                   {property.property_features &&
                     property.property_features.bathrooms && (
-                      <div className='flex  items-center gap-2 text-lg text-slate-500'>
+                      <div className='flex items-center gap-1 text-lg text-slate-500 only:grow only:self-start'>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           className='h-6 w-6'
@@ -159,18 +159,18 @@ const PropertyCard = ({ property }: Props) => {
                     )}
                   {property.property_features &&
                     property.property_features.housesize && (
-                      <div className='flex  gap-1 text-lg text-slate-800'>
-                        <span className='text-md font-medium text-slate-800'>
+                      <div className='flex gap-1 text-lg text-slate-800 only:grow only:self-start'>
+                        <span className='text-md font-medium '>
                           {property.property_features.housesize}
                         </span>
-                        <span className='text-slate-600'>
-                          m<sup>2</sup>
+                        <span className='text-slate-600 xtext-sm '>
+                          m<sup className='font-features sups'>2</sup>
                         </span>
                       </div>
                     )}
                   {property.property_features &&
                     property.property_features.yearbuilt && (
-                      <div className='flex  gap-1 text-lg text-slate-800'>
+                      <div className='flex gap-1 text-lg text-slate-800 only:grow only:self-start'>
                         <span className='text-slate-600'>año</span>
                         <span className=''>
                           {property.property_features.yearbuilt}
