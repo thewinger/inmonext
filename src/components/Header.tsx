@@ -22,7 +22,8 @@ const Header = () => {
   const router = useRouter()
 
   return (
-    <header className='sticky top-0 z-50 flex w-full flex-wrap items-start justify-between border-b-2 border-slate-50 bg-white/80 py-2 px-4 pr-3 backdrop-blur-md '>
+    <header className='sticky top-0 z-50 w-full border-b-2 border-slate-50 bg-white/80 py-2 px-4 pr-3 backdrop-blur-md '>
+      <div className='max-w-7xl flex flex-wrap items-start justify-between m-auto '>
       <Link href='/'>
         <a className='relative h-12 w-48'>
           <h1 className='sr-only'>InmoGolf Bonalba</h1>
@@ -95,6 +96,7 @@ const Header = () => {
           ))}
         </div>
       </nav>
+    </div>
     </header>
   )
 }

@@ -24,7 +24,7 @@ const PropertyCard = ({ property }: Props) => {
             </div>
           )}
           {property.property_info && (
-            <div className='absolute top-6 left-6 backdrop-blur-md shrink-0 rounded-md border bg-white/60 text-green-900 py-1 px-2 text-xs font-semibold uppercase shadow-sm  '>
+            <div className='absolute top-6 left-6 shrink-0 rounded-md border bg-white/60 py-1 px-2 text-xs font-semibold uppercase text-green-900 shadow-sm backdrop-blur-md  '>
               {property.property_info.statustag}
             </div>
           )}
@@ -96,10 +96,10 @@ const PropertyCard = ({ property }: Props) => {
                           d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'
                         />
                       </svg>
-                      {property.locations.nodes.map((location) => (
+                      {property.locations.nodes.map((location,index) => (
                         <div
                           className='capitalize text-slate-800'
-                          key={location!.slug}
+                          key={index}
                         >
                           {location!.ancestors && location!.ancestors.nodes && (
                             <span>{location!.ancestors.nodes[0].name} - </span>
@@ -163,7 +163,7 @@ const PropertyCard = ({ property }: Props) => {
                         <span className='text-md font-medium '>
                           {property.property_features.housesize}
                         </span>
-                        <span className='text-slate-600 xtext-sm '>
+                        <span className='xtext-sm text-slate-600 '>
                           m<sup className='font-features sups'>2</sup>
                         </span>
                       </div>
